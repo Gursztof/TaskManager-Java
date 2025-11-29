@@ -22,12 +22,12 @@ public class TaskManager {
 
         int choice = scanner.nextInt() - 1;
         boolean isChoiceValid = false;
-        boolean newDesc = false;
+        boolean newIsDone = false;
 
         do {
             try {
                 System.out.println("What is your new status (true/false). For this task *" + allTasks.get(choice) + "*");
-                newDesc = scanner.nextBoolean();
+                newIsDone = scanner.nextBoolean();
                 isChoiceValid = true;
             } catch (Exception e) {
                 System.out.println("Please provide valid value (true/false)");
@@ -35,7 +35,7 @@ public class TaskManager {
             }
         } while (!isChoiceValid);
 
-        allTasks.get(choice).changeDesc(newDesc);
+        allTasks.get(choice).changeisDone(newIsDone);
 
         FileManager.updateFile(allTasks);
     }
@@ -60,23 +60,21 @@ public class TaskManager {
     }
     static void addTask(ArrayList<Task> allTasks) {
 
-        boolean isDescValid = false;
+        boolean isDoneValid = false;
         boolean isPrioValid = false;
 
         // Default values for new task
-        boolean description = false;
+        boolean isDone = false;
         char priority = 'L';
 
         System.out.print("Enter your task name: ");
         String name = scanner.nextLine().trim();
 
-        System.out.print("Enter your task description (is your task done).");
-
         do {
-            System.out.print("\nValue must be (true/false): ");
+            System.out.print("\nIs your task done (true/false): ");
             try {
-                description = scanner.nextBoolean();
-                isDescValid = true;
+                isDone = scanner.nextBoolean();
+                isDoneValid = true;
             } catch (InputMismatchException e) {
                 System.out.println("Please choose from (true/false)");
                 scanner.nextLine();
@@ -84,10 +82,9 @@ public class TaskManager {
                 System.out.println("Something went wrong");
                 scanner.nextLine();
             }
-        } while (!isDescValid);
+        } while (!isDoneValid);
 
 
-        // TODO = Trzeba zrobic poprawny komunikat a nie tylko "Something went wrong".
         String ANSI_RESET = "\u001B[0m";
 
         String ANSI_GREEN = "\u001B[32m";
@@ -95,7 +92,7 @@ public class TaskManager {
         String ANSI_RED = "\u001B[31m";
 
         do {
-            System.out.print("Enter your task priority (" + ANSI_GREEN + "L" + ANSI_RESET + ", " + ANSI_YELLOW + "M" + ANSI_RESET + ", " + ANSI_RED + "H" + ANSI_RESET + "):");
+            System.out.print("Enter your task priority (" + ANSI_GREEN + "L" + ANSI_RESET + ", " + ANSI_YELLOW + "M" + ANSI_RESET + ", " + ANSI_RED + "H" + ANSI_RESET + "): ");
             try {
                 priority = scanner.next().toUpperCase().charAt(0);
                 if (priority == 'L' || priority == 'M' || priority == 'H') {
@@ -112,7 +109,7 @@ public class TaskManager {
 
         LocalDateTime dateNow = LocalDateTime.now();
 
-        Task newTask = new Task(name, description, priority, dateNow);
+        Task newTask = new Task(name, isDone, priority, dateNow);
         allTasks.add(newTask);
 
         FileManager.addTask(newTask);
@@ -179,11 +176,11 @@ public class TaskManager {
 
         switch (choice) {
             case 1 -> { for (Task t : allTasks) {
-                if (t.getDescription()) {
+                if (t.getIsDone()) {
                     System.out.println(t.getTask());
                 }}}
             case 2 -> { for (Task t : allTasks) {
-                if (!t.getDescription()) {
+                if (!t.getIsDone()) {
                     System.out.println(t.getTask());
                 }}}
             case 3 -> { for (Task t : allTasks) {

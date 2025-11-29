@@ -21,6 +21,8 @@ public class FileManager {
         }
     }
 
+
+    // This method actually just return allTasksFromFile which are just all task from file allTasks.txt after conversation.
     static ArrayList<Task> updateAllTasks() {
         String filePath = "./allTasks.txt";
 
@@ -37,18 +39,18 @@ public class FileManager {
 
                 String dateLine = line.substring(first3 + 1);
                 char priority = line.charAt(first2 + 1);
-                boolean desc = Boolean.parseBoolean(line.substring(first1 + 1, first2));
+                boolean IsDone = Boolean.parseBoolean(line.substring(first1 + 1, first2));
                 String name = line.substring(0, first1);
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy/HH:mm:ss");
                 LocalDateTime date = LocalDateTime.parse(dateLine, formatter);
 
-                Task task = new Task(name, desc, priority, date);
+                Task task = new Task(name, IsDone, priority, date);
 
                 allTasksFromFile.add(task);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("You didn't add task yet!\n");
+            System.out.println("You didn't add task yet!");
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
@@ -57,7 +59,7 @@ public class FileManager {
 
     static void addTask(Task newTask) {
         try (FileWriter writer = new FileWriter("allTasks.txt", true)) {
-            writer.write("\n" + newTask);
+            writer.write(newTask + "\n");
         } catch (IOException e) {
             System.out.println("Task you trying add is invalid");
         }

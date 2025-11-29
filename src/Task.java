@@ -4,37 +4,37 @@ import java.time.format.DateTimeFormatter;
 public class Task {
 
     private String name;
-    private boolean desc;
+    private boolean isDone;
     private char priority;
     private LocalDateTime date;
 
 
-    Task(String name, boolean desc, char priority, LocalDateTime date) {
+    Task(String name, boolean isDone, char priority, LocalDateTime date) {
         this.name = name;
-        this.desc = desc;
+        this.isDone = isDone;
         this.priority = priority;
         this.date = date;
     }
 
     public String getTask() {
-        return "Task: " + this.name + " | " + "Done: " + this.desc + " | " + "Priority: " + getPriorityColor() + " | " + "Date: " + getFormattedDate(this.date);
+        return "Task: " + this.name + " | " + "Done: " + this.isDone + " | " + "Priority: " + getPriorityColor() + " | " + "Date: " + getFormattedDate(this.date);
     }
 
     @Override
     public String toString() {
-        return this.name + ";" + this.desc + ";" + this.priority + ";" + getFormattedDate(this.date);
+        return this.name + ";" + this.isDone + ";" + this.priority + ";" + getFormattedDate(this.date);
     }
 
-    void changeDesc(boolean desc) {
-        this.desc = desc;
+    void changeisDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     LocalDateTime getDate() {
         return this.date;
     }
 
-    boolean getDescription() {
-        return this.desc;
+    boolean getIsDone() {
+        return this.isDone;
     }
 
     int getPriority() {
